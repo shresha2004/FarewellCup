@@ -124,18 +124,23 @@ const PlayerRegistration = () => {
                 </div>
 
                 <div className="flex items-center">
-                  <label htmlFor="year" className="font-bold text-sm text-[#2D283E] w-1/3">
-                    Year:
-                  </label>
-                  <input
-                    type="text"
-                    id="year"
-                    value={year}
-                    onChange={(e) => setYear(e.target.value)}
-                    required
-                    className="w-full px-2 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-[#2D283E] bg-[#2D283E] text-white"
-                  />
-                </div>
+            <label htmlFor="year" className="font-bold text-sm text-[#2D283E] w-1/3">
+              Year:
+            </label>
+            <select
+              id="year"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+              required
+              className="w-full px-2 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white bg-[#2D283E]"
+            >
+              <option value="">Select Year</option>
+              <option value="1st Year">1st Year</option>
+              <option value="2nd Year">2nd Year</option>
+              <option value="3rd Year">3rd Year</option>
+              <option value="4th Year">4th Year</option>
+            </select>
+        </div>
 
                 <div className="flex items-center">
                   <label htmlFor="contact" className="font-bold text-sm text-[#2D283E] w-1/3">
