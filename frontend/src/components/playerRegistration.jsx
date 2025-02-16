@@ -60,7 +60,8 @@ const PlayerRegistration = () => {
     };
 
     try {
-      await axios.post('http://localhost:6001/register', playerData, {
+      // await axios.post('http://localhost:6001/register', playerData, {
+      await axios.post('https://farewell-cup.vercel.app/register', playerData, {
         headers: {
           'Content-Type': 'application/json',
         },
