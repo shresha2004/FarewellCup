@@ -2,3 +2,35 @@
 body{
   background-color: #2D283E;
 }
+
+/* Shiny Button Effect */
+.shiny-button {
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.shiny-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(193, 172, 172, 0.6), transparent);
+  transform: skewX(-30deg);
+  animation: shine 2s infinite;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 0%;
+  }
+  100% {
+    left: 100%;
+  }
+}

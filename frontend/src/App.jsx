@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import Navbar from './components/navbar';
-import PlayerRegistration from './components/playerRegistration';
+import Introduction from './components/introduction';
 
 function App() {
   // Create refs for each section
@@ -29,8 +29,8 @@ function App() {
     <div className="min-h-screen flex flex-col">
       <Navbar scrollToSection={scrollToSection} />
       <main className="mt-16"> 
-        {/* Margin-top to push content below the navbar */}
-        <PlayerRegistration />
+        <Introduction/>
+        
       </main>
     </div>
   );

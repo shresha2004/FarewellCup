@@ -78,8 +78,8 @@ const PlayerRegistration = () => {
     <div className="text-center mt-4">
       <button
         onClick={openModal}
-        className="bg-[#802BB1] text-[#2D283E] font-bold px-4 py-2 rounded-md transition"
-      >
+        rel="noopener noreferrer"
+        className="shiny-button bg-gradient-to-r from-[#6E2398] via-[#802BB1] to-[#9D3DCF] text-white font-bold py-4 px-8 rounded-full text-2xl shadow-lg transition-all relative"      >
         Register
       </button>
 
