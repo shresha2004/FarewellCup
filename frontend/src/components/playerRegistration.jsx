@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { ClipLoader } from 'react-spinners';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import RegistrationSuccess from './RegistrationSuccess';  // Import the success page
 
 const PlayerRegistration = () => {
   const [name, setName] = useState('');
@@ -10,6 +14,8 @@ const PlayerRegistration = () => {
   const [image, setImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);  // Track registration status
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -21,7 +27,7 @@ const PlayerRegistration = () => {
   const uploadToCloudinary = async () => {
     const formData = new FormData();
     formData.append('file', image);
-    formData.append('upload_preset', 'mni2tbq0'); // Change this
+    formData.append('upload_preset', 'mni2tbq0'); // Ensure this is your correct preset
 
     setIsUploading(true);
     try {
@@ -45,7 +51,7 @@ const PlayerRegistration = () => {
     if (image) {
       imageUrl = await uploadToCloudinary();
       if (!imageUrl) {
-        alert('Image upload failed. Please try again.');
+        toast.error('Image upload failed. Please try again.');
         return;
       }
     }
@@ -59,20 +65,29 @@ const PlayerRegistration = () => {
       profilePic: imageUrl,
     };
 
+    setIsSubmitting(true);
+
     try {
-     //await axios.post('http://localhost:6001/register', playerData, {
-        await axios.post('https://farewell-cup.vercel.app/register', playerData, {
+      await axios.post('http://localhost:6001/register', playerData, {
+      // await axios.post('https://farewell-cup.vercel.app/register', playerData, {
         headers: {
           'Content-Type': 'application/json',
         },
         withCredentials: true,
       });
-      alert('Registration Successful!');
-      closeModal();
+      toast.success('Registration Successful!');
+      setIsRegistered(true); // Set registration status to true
     } catch (error) {
       console.error('Error registering player:', error);
+      toast.error('Registration failed. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
+
+  if (isRegistered) {
+    return <RegistrationSuccess />;  // Show the success page after registration
+  }
 
   return (
     <div className="text-center mt-4">
@@ -85,10 +100,10 @@ const PlayerRegistration = () => {
 
       {isModalOpen && (
         <>
-          <div className='fixed inset-0 bg-indigo-500 opacity-25 backdrop-blur-sm z-10'> </div>
+          <div className="fixed inset-0 bg-indigo-500 opacity-25 backdrop-blur-sm z-10"> </div>
 
-          <div className="fixed inset-0 flex items-center justify-center  overflow-auto z-20">
-            <div className="bg-[#802BB1]  rounded-lg shadow-lg w-11/12 md:w-2/3 lg:w-1/2 p-4 relative max-h-screen overflow-y-auto">
+          <div className="fixed inset-0 flex items-center justify-center overflow-auto z-20">
+            <div className="bg-[#802BB1] rounded-lg shadow-lg w-11/12 md:w-2/3 lg:w-1/2 p-4 relative max-h-screen overflow-y-auto">
               <button
                 onClick={closeModal}
                 className="absolute top-2 right-3 text-2xl font-bold text-gray-600 hover:text-red-600 transition"
@@ -185,7 +200,6 @@ const PlayerRegistration = () => {
                       <option value="Wicket Keeper">Wicket Keeper</option>
                       <option value="All-Rounder">All-Rounder</option>
                     </select>
-
                   </div>
 
                   <div className="flex items-center">
@@ -207,15 +221,21 @@ const PlayerRegistration = () => {
                 <button
                   type="submit"
                   className="bg-[#2D283E] text-zinc-400 px-3 py-1 rounded-md font-bold hover:text-white transition mt-4"
-                  disabled={isUploading}
+                  disabled={isSubmitting || isUploading}
                 >
-                  Submit
+                  {isSubmitting ? (
+                    <ClipLoader size={20} color="#ffffff" />
+                  ) : (
+                    'Submit'
+                  )}
                 </button>
               </form>
             </div>
           </div>
         </>
       )}
+
+      <ToastContainer />
     </div>
   );
 };
