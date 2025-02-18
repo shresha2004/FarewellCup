@@ -2,8 +2,12 @@ import { useState } from 'react';
 import { useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/navbar';
+
+import Introduction from './components/introduction';
+
 import PlayerRegistration from './components/playerRegistration';
 import RegistrationSuccess from './components/RegistrationSuccess';
+
 
 function App() {
   // Create refs for each section
@@ -31,21 +35,19 @@ function App() {
   const [registrationSuccessful, setRegistrationSuccessful] = useState(false);
 
   return (
-    <Router>
-      <div className="min-h-screen flex flex-col">
-        <Navbar scrollToSection={scrollToSection}/>
-        <main className="mt-16"> 
-          {/* Margin-top to push content below the navbar */}
-          <Routes>
-            {/* Registration Page */}
-            <Route path="/" element={<PlayerRegistration setRegistrationSuccessful={setRegistrationSuccessful} />} />
-
-            {/* Success Page */}
-            <Route path="/success" element={<RegistrationSuccess />} />
-          </Routes>
-        </main>
-      </div>
-    </Router>
+<Router>
+  <div className="min-h-screen flex flex-col">
+    <Navbar scrollToSection={scrollToSection} />
+    <main className="mt-16"> 
+      <Introduction />
+      {/* Margin-top to push content below the navbar */}
+      <Routes>
+        <Route path="/" element={<PlayerRegistration setRegistrationSuccessful={setRegistrationSuccessful} />} />
+        <Route path="/success" element={<RegistrationSuccess />} />
+      </Routes>
+    </main>
+  </div>
+</Router>
   );
 }
 
