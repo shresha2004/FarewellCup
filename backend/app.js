@@ -20,8 +20,8 @@ const store = new MongoStore({
 });
 
 const corsOptions = {
-    origin: "http://localhost:6001",
-    // origin: "https://farewell-cup-frontend.vercel.app",
+    // origin: "http://localhost:6001",
+    origin: "https://farewell-cup-frontend.vercel.app",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
     optionSuccessStatus: 200
