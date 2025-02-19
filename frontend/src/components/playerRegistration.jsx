@@ -4,8 +4,9 @@ import { ClipLoader } from 'react-spinners';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import RegistrationSuccess from './RegistrationSuccess';  // Import the success page
+import api from "../utils/api";
 
-const PlayerRegistration = () => {
+const PlayerRegistration = (ref) => {
   const [name, setName] = useState('');
   const [hostel, setHostel] = useState('');
   const [year, setYear] = useState('');
@@ -68,13 +69,8 @@ const PlayerRegistration = () => {
     setIsSubmitting(true);
 
     try {
-     // await axios.post('http://localhost:6002/register', playerData, {
-      await axios.post('https://farewell-cup.vercel.app/register', playerData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      });
+     // await api.post('/register', playerData, {
+      await api.post('players/register', playerData);
       toast.success('Registration Successful!');
       setIsRegistered(true); // Set registration status to true
     } catch (error) {
