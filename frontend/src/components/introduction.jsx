@@ -1,7 +1,7 @@
 import React from 'react';
-import PlayerRegistration from './playerRegistration';
+import PlayerRegistration from './playerRegistration';  // Import PlayerRegistration component
 
-const Introduction = () => {
+const Introduction = ({ setRegistrationSuccessful }) => {
   return (
     <div 
       className="relative flex flex-col md:flex-row items-center justify-center text-white py-12 px-4 bg-cover bg-center sm:bg-none"
@@ -24,8 +24,9 @@ const Introduction = () => {
           real-time auction using a point-based system. Join us for an unforgettable experience as we bid, build teams, and celebrate the 
           spirit of cricket!
         </p>
-        {/* Register Component */}
-        <PlayerRegistration />
+        
+        {/* Player Registration Form */}
+        <PlayerRegistration setRegistrationSuccessful={setRegistrationSuccessful} />
       </div>
 
       {/* Right Side: Image for Larger Screens */}

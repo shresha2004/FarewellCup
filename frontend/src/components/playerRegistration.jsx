@@ -68,7 +68,7 @@ const PlayerRegistration = () => {
     setIsSubmitting(true);
 
     try {
-      // await axios.post('http://localhost:6001/register', playerData, {
+     // await axios.post('http://localhost:6002/register', playerData, {
       await axios.post('https://farewell-cup.vercel.app/register', playerData, {
         headers: {
           'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ const PlayerRegistration = () => {
   }
 
   return (
-    <div className="text-center mt-4">
+    <div className="text-center ">
       <button
         onClick={openModal}
         rel="noopener noreferrer"

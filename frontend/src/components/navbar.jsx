@@ -1,7 +1,7 @@
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
+import { faBaseballBatBall } from "@fortawesome/free-solid-svg-icons";  // Use this or any other cricket-related icon
 
 export default function Navbar({ scrollToSection }) {
   const navigation = [
@@ -29,7 +29,7 @@ export default function Navbar({ scrollToSection }) {
           {/* Logo and navigation links */}
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex items-center">
-              <FontAwesomeIcon icon={faBriefcase} className="text-2xl mr-2 text-white animate-spin mr-5" />
+              <FontAwesomeIcon icon={faBaseballBatBall} className="text-2xl mr-2 text-white animate-spin mr-5" />
               <span className="font-bold text-2xl text-[#802BB1]">Farewell Cup 2025</span>
             </div>
 
