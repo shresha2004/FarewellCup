@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PlayerRegistration from './playerRegistration';  // Import PlayerRegistration component
 
-const Introduction = ({ setRegistrationSuccessful }) => {
+const Introduction = forwardRef(({ setRegistrationSuccessful }, ref) => {
   return (
     <div 
+      ref={ref} // Attach ref here
       className="relative flex flex-col md:flex-row items-center justify-center text-white py-12 px-4 bg-cover bg-center sm:bg-none"
     >
       {/* Background Image for Mobile with Reduced Opacity */}
@@ -39,6 +40,6 @@ const Introduction = ({ setRegistrationSuccessful }) => {
       </div>
     </div>
   );
-}
+});
 
 export default Introduction;

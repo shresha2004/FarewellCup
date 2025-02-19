@@ -1,0 +1,49 @@
+import { useState, useEffect, forwardRef } from "react";
+import api from "../utils/api"; // Import your Axios instance
+
+const TeamList = forwardRef((props, ref) => {
+    const [teams, setTeams] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchTeams = async () => {
+            try {
+                const { data } = await api.get("/teams"); // Uses Axios instance
+                setTeams(data);
+            } catch (err) {
+                console.error("Error fetching teams:", err.response?.data || err.message);
+                setError("Failed to load teams. Please try again later.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTeams();
+    }, []);
+
+    return (
+        <div ref={ref} className="bg-[#2D283E] min-h-screen p-4">
+            <h2 className="text-white text-3xl font-bold text-center mb-6 underline">Teams</h2>
+
+            {loading ? (
+                <p className="text-white text-center text-lg">Loading teams...</p>
+            ) : error ? (
+                <p className="text-red-500 text-center">{error}</p>
+            ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {teams.map((team) => (
+                        <div key={team._id} className="bg-[#802BB1] rounded-lg p-4 shadow-lg text-white">
+                            <img src={team.teamLogo} alt={team.teamName} className="w-full h-40 object-cover rounded-md" />
+                            <h3 className="text-lg font-semibold mt-2">{team.teamName}</h3>
+                            <p className="text-sm">Captain: {team.captainName}</p>
+                            <p className="text-sm">Icon Player: {team.iconPlayerName}</p>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+});
+
+export default TeamList;

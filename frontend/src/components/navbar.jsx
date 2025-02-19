@@ -6,15 +6,16 @@ import { faBaseballBatBall } from "@fortawesome/free-solid-svg-icons";  // Use t
 export default function Navbar({ scrollToSection }) {
   const navigation = [
     { name: 'Introduction', section: 'introduction' },
+    { name: 'Players Registered', section: 'playersRegistered' },
+    { name: 'Teams', section: 'teams' },
     { name: 'Rules', section: 'rules' },
-    { name: 'Registration', section: 'registration' },
     { name: 'Venue', section: 'venue' },
     { name: 'Date And Timings', section: 'timings' },
     { name: 'Contact', section: 'contact' },
   ];
 
   return (
-    <Disclosure as="nav" className="backgroundColor shadow fixed top-0 w-full z-50">
+    <Disclosure as="nav" className="bg-[#2D283E] shadow fixed top-0 w-full z-500">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           {/* Mobile menu button */}
