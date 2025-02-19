@@ -20,7 +20,7 @@ const store = new MongoStore({
 });
 
 const corsOptions = {
-    // origin: "http://localhost:6001",
+    //origin: "http://localhost:5173",
     origin: "https://farewell-cup-frontend.vercel.app",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
@@ -77,6 +77,6 @@ app.post('/register', async (req, res) => {
 
 app.get('/favicon.ico', (req, res) => res.status(204));
 
-app.listen(6001, () => {
-    console.log("Serving on port 6001");
+app.listen(6002, () => {
+    console.log("Serving on port 6002");
 });
