@@ -39,7 +39,7 @@ function App() {
     <Router>
       <div className="min-h-screen flex flex-col">
         <Navbar scrollToSection={scrollToSection} />
-        <main className="mt-16"> 
+        <main className="pt-16"> 
           <div ref={introductionRef} id="introduction">
             <Introduction setRegistrationSuccessful={setRegistrationSuccessful} />
           </div>

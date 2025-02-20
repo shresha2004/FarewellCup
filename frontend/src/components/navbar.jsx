@@ -15,7 +15,7 @@ export default function Navbar({ scrollToSection }) {
   ];
 
   return (
-    <Disclosure as="nav" className="bg-[#2D283E] shadow fixed top-0 w-full z-500">
+    <Disclosure as="nav" className="bg-[#2D283E] shadow fixed top-0 w-full z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           {/* Mobile menu button */}
