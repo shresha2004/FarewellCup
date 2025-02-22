@@ -49,7 +49,7 @@ function AppContent() {
 
   if(isAdmin) localStorage.setItem('isAdmin','true');
 
-  return (
+ return (
     <div className="min-h-screen flex flex-col">
       {/* Show Navbar only if not on the bidding page */}
       {location.pathname !== "/bidding" && <Navbar scrollToSection={scrollToSection} />}
