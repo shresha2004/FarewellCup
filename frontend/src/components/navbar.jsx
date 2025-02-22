@@ -3,7 +3,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBaseballBatBall } from "@fortawesome/free-solid-svg-icons";  // Use this or any other cricket-related icon
 
-export default function Navbar({ scrollToSection }) {
+export default function Navbar({ scrollToSection, isAdmin,setIsadmin }) {
   const navigation = [
     { name: 'Introduction', section: 'introduction' },
     { name: 'Players Registered', section: 'playersRegistered' },
@@ -12,7 +12,13 @@ export default function Navbar({ scrollToSection }) {
     { name: 'Venue', section: 'venue' },
     { name: 'Date And Timings', section: 'timings' },
     { name: 'Contact', section: 'contact' },
+    { name: 'Organiser Login', section: 'login' },
   ];
+  const handleLogout=()=>{
+    localStorage.removeItem("isAdmin");
+    setIsadmin(false);
+  }
+  
 
   return (
     <Disclosure as="nav" className="bg-[#2D283E] shadow fixed top-0 w-full z-50">
