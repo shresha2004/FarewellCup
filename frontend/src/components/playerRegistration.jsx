@@ -69,7 +69,7 @@ const PlayerRegistration = (ref) => {
     setIsSubmitting(true);
 
     try {
-     // await api.post('/register', playerData, {
+     
       await api.post('players/register', playerData);
       toast.success('Registration Successful!');
       setIsRegistered(true); // Set registration status to true

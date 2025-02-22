@@ -12,7 +12,8 @@ const teamSchema = new mongoose.Schema({
   iconPlayerYearOfStudy: { type: String, required: true },
   teamLogo: { type: String, required: true }, // URL of the uploaded image
   captainImage: { type: String, required: true }, // URL of the uploaded image
-  iconPlayerImage: { type: String, required: true } // URL of the uploaded image
+  iconPlayerImage: { type: String, required: true } ,// URL of the uploaded image
+  totalAmount: { type: Number, default: 10000 }
 }, { timestamps: true });
 
 const Team = mongoose.model('Team', teamSchema);

@@ -27,7 +27,8 @@ const playerSchema = new mongoose.Schema({
     profilePic: {
         type: String,
         required: true
-    }
+    },
+    team: { type: mongoose.Schema.Types.ObjectId, ref: 'Team', default: null }
 });
 
 // Create Model
