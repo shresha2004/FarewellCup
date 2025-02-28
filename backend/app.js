@@ -25,8 +25,8 @@ const store = new MongoStore({
 });
 
 const corsOptions = {
-    //origin: "http://localhost:5173",
-   origin: "https://farewell-cup-frontend.vercel.app",
+    // origin: "http://localhost:5173",
+    origin: "https://farewell-cup-frontend.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     optionSuccessStatus: 200,
@@ -55,8 +55,8 @@ db.once("open", () => {
 // Routes
 app.use("/api/players", playerRoutes);
 app.use("/api/teams", teamRoutes);
-app.use("/api/admin",adminRoutes);
-app.use("/api/bid",bidRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/bid", bidRoutes);
 
 
 app.get("/", (req, res) => {
