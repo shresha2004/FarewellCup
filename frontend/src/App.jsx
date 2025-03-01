@@ -10,11 +10,15 @@ import TeamList from './components/teamDisplay';
 import AuctionRules from './components/auctionRules';
 import AdminLogin from './components/organiserLogin';
 import BiddingPage from './components/bidding';
+
 import TeamDetails from './components/teamDetails';
 
-function App() {
-  
+import Contact from './components/Contact';
+import Venue from './components/Venue';  // ✅ Import Venue Component
+import DateTimings from './components/DateTimings';  // ✅ Import Date & Timings Component
 
+
+function App() {
   return (
     <Router>
       <AppContent />
@@ -23,59 +27,66 @@ function App() {
 }
 
 function AppContent() {
-  const location = useLocation(); // Now inside Router, so it works fine!
-  const [registrationSuccessful, setRegistrationSuccessful] = useState(false);
+  const location = useLocation();
   const [isAdmin, setIsAdmin] = useState(false);
 
-  
-  const introductionRef = useRef(null);
-  const playersRegisteredRef = useRef(null);
-  const teamsRef = useRef(null);
-  const rulesRef = useRef(null);
-  const loginRef = useRef(null);
-  const contactRef = useRef(null);
-
-  const scrollToSection = (section) => {
-    const sectionRefs = {
-      introduction: introductionRef,
-      playersRegistered: playersRegisteredRef,
-      teams: teamsRef,
-      rules: rulesRef,
-      login: loginRef,
-      contact: contactRef,
-    };
-
-    sectionRefs[section]?.current?.scrollIntoView({ behavior: 'smooth' });
+  // Refs for smooth scrolling
+  const sectionRefs = {
+    introduction: useRef(null),
+    playersRegistered: useRef(null),
+    teams: useRef(null),
+    rules: useRef(null),
+    venue: useRef(null),
+    dateTimings: useRef(null),
+    contact: useRef(null),
+    login: useRef(null),
   };
 
-  if(isAdmin) localStorage.setItem('isAdmin','true');
-
- return (
+  const scrollToSection = (section) => {
+    sectionRefs[section]?.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+if(isAdmin) localStorage.setItem('isAdmin','true');
+  return (
     <div className="min-h-screen flex flex-col">
       {/* Show Navbar only if not on the bidding page */}
-      {location.pathname !== "/bidding" && <Navbar scrollToSection={scrollToSection} />}
+      {location.pathname !== "/bidding" && <Navbar scrollToSection={scrollToSection} isAdmin={isAdmin} setIsAdmin={setIsAdmin} />}
 
       <main className="mt-16">
         <Routes>
           <Route path="/success" element={<RegistrationSuccess />} />
           <Route path="/mandaVinayChandra" element={<TeamRegistrationForm />} />
           <Route path="/bidding" element={<BiddingPage />} />
+
           <Route path="/teams/:teamId" element={<TeamDetails />} />
           
           {/* Render all other sections only when not on bidding page */}
+
           <Route
             path="/"
             element={
               <>
-                <div ref={introductionRef} id="introduction">
-                  <Introduction setRegistrationSuccessful={setRegistrationSuccessful} />
+                <div ref={sectionRefs.introduction} id="introduction">
+                  <Introduction />
                 </div>
 
-                <PlayerList ref={playersRegisteredRef} id="playersRegistered" />
-                <TeamList ref={teamsRef} id="teams" />
-                <AuctionRules ref={rulesRef} id="rules" />
+                <TeamList ref={sectionRefs.teams} id="teams" />
+                <PlayerList ref={sectionRefs.playersRegistered} id="playersRegistered" />
 
-                <div ref={loginRef} id="login">
+                <AuctionRules ref={sectionRefs.rules} id="rules" />
+
+                <div ref={sectionRefs.venue} id="venue">
+                  <Venue />
+                </div>
+
+                <div ref={sectionRefs.dateTimings} id="dateTimings">
+                  <DateTimings />
+                </div>
+
+                <div ref={sectionRefs.contact} id="contact">
+                  <Contact />
+                </div>
+
+                <div ref={sectionRefs.login} id="login">
                   <AdminLogin setIsAdmin={setIsAdmin} />
                   {isAdmin && <StartBiddingButton />}
                 </div>
