@@ -45,10 +45,28 @@ router.post("/register", async (req, res) => {
 router.get("/", async (req, res) => {
     try {
         const teams = await Team.find();
+       
         res.status(200).json(teams);
     } catch (error) {
         console.error("Error fetching teams:", error);
         res.status(500).json({ message: "Failed to fetch teams." });
+    }
+});
+
+router.get("/:teamId", async (req, res) => {
+    try {
+        const teamId = req.params.teamId;
+        const team = await Team.findById(teamId);
+        console.log(team);
+
+        if (!team) {
+            return res.status(404).json({ error: "Team not found" });
+        }
+
+        res.status(200).json(team);
+    } catch (error) {
+        console.error("Error fetching team:", error);
+        res.status(500).json({ error: "Server Error" });
     }
 });
 

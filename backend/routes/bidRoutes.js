@@ -18,12 +18,20 @@ router.post('/', async (req, res) => {
             return res.status(404).json({ success: false, message: "Team not found" });
         }
 
-        // Check if team has enough points
+        // Check the current number of players in the team
+        const playerCount = await Player.countDocuments({ team: teamId });
+        
+        // If the team already has 11 players, prevent adding more
+        if (playerCount > 11) {
+            return res.status(400).json({ success: false, message: "Team already has 11 players. Cannot add more." });
+        }
+
+        // Check if the team has enough points
         if (team.totalAmount < bidAmount) {
             return res.status(400).json({ success: false, message: "Not enough points in the team balance" });
         }
 
-        // Update Player's team
+        // Assign player to the team
         await Player.findByIdAndUpdate(playerId, { team: teamId });
 
         // Deduct the bidAmount from team's totalAmount

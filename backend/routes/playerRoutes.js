@@ -36,4 +36,19 @@ router.get("/", async (req, res) => {
     }
 });
 
+router.get("/:teamId", async (req, res) => {
+    try {
+        const { teamId } = req.params;
+        const players = await Player.find({ team: teamId });
+        console.log(players);
+        if (!players.length) {
+            return res.status(404).json({ message: "No players found for this team." });
+        }
+
+        res.status(200).json(players);
+    } catch (error) {
+        console.error("Error fetching players by team ID:", error);
+        res.status(500).json({ message: "Failed to fetch players." });
+    }
+});
 module.exports = router;

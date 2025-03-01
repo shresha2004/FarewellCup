@@ -10,6 +10,7 @@ import TeamList from './components/teamDisplay';
 import AuctionRules from './components/auctionRules';
 import AdminLogin from './components/organiserLogin';
 import BiddingPage from './components/bidding';
+import TeamDetails from './components/teamDetails';
 
 function App() {
   
@@ -59,6 +60,7 @@ function AppContent() {
           <Route path="/success" element={<RegistrationSuccess />} />
           <Route path="/mandaVinayChandra" element={<TeamRegistrationForm />} />
           <Route path="/bidding" element={<BiddingPage />} />
+          <Route path="/teams/:teamId" element={<TeamDetails />} />
           
           {/* Render all other sections only when not on bidding page */}
           <Route
