@@ -3,8 +3,8 @@ import axios from "axios";
 const api = axios.create({
 
 
-  // baseURL: "http://localhost:6002/api",
-  baseURL: "https://farewell-cup.vercel.app/api",
+   baseURL: "http://localhost:6002/api",
+  //baseURL: "https://farewell-cup.vercel.app/api",
 
 
   headers: {
@@ -16,7 +16,7 @@ const api = axios.create({
 // Add a request interceptor (optional)
 api.interceptors.request.use(
   (config) => {
-    console.log(`Request sent to ${config.url}`);
+   // console.log(`Request sent to ${config.url}`);
     return config;
   },
   (error) => {

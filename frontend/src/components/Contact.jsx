@@ -26,7 +26,7 @@ const Contact = () => {
     const closeModal = () => setSelectedOrganizer(null);
 
     return (
-        <div className="py-12 px-6 bg-[#0a001f] text-white">
+        <div className="py-12 px-6 bg-[#2a024b] text-white">
             <h2 className="text-4xl font-bold text-center neon-text mb-10">⚡ Meet the Organizers ⚡</h2>
 
             {/* Responsive Organizer Cards Grid */}

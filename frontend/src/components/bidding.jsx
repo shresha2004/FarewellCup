@@ -125,8 +125,12 @@ const BiddingPage = () => {
 
                     {/* Countdown Overlay */}
                     {countdown > 0 && (
-                        <div className="fixed inset-0 flex items-center justify-center bg-indigo-500 bg-opacity-40 backdrop-blur-md z-50 pointer-events-none">
-                            <span className="text-white text-9xl font-extrabold">Selecting Player in {countdown}</span>
+                        <div
+                            className="fixed inset-0 bg-gradient-to-br from-black/70 to-black/10 backdrop-blur-md flex justify-center items-center z-[100] p-4"
+                            onClick={() => setSelectedTeam(null)}
+                        >                            <span className="text-[#802BB1] text-9xl font-extrabold animate-pulse text-center">
+                                Choosing Random Player in  {countdown}
+                            </span>
                         </div>
                     )}
                 </div>
