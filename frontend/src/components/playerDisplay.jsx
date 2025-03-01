@@ -23,7 +23,7 @@ const PlayerList = forwardRef((props, ref) => {
     }, []);
 
     return (
-        <div className="bg-[#2D283E] min-h-screen p-4" ref={ref}>
+        <div className=" min-h-screen p-4" ref={ref}>
             <h2 className="text-white text-3xl font-bold text-center mb-6 underline">
                 Players Registered
             </h2>

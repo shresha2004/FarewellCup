@@ -12,7 +12,7 @@ import AdminLogin from './components/organiserLogin';
 import BiddingPage from './components/bidding';
 
 import TeamDetails from './components/teamDetails';
-
+import Footer from './components/footer';
 import Contact from './components/Contact';
 import Venue from './components/Venue';  // ✅ Import Venue Component
 import DateTimings from './components/DateTimings';  // ✅ Import Date & Timings Component
@@ -90,6 +90,7 @@ if(isAdmin) localStorage.setItem('isAdmin','true');
                   <AdminLogin setIsAdmin={setIsAdmin} />
                   {isAdmin && <StartBiddingButton />}
                 </div>
+                <Footer/>
               </>
             }
           />
@@ -106,7 +107,7 @@ function StartBiddingButton() {
     <div className="flex justify-center mt-4">
       <button
         onClick={() => navigate('/bidding')}
-        className="bg-[#802BB1] text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition"
+        className="bg-[#802BB1] text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition mb-3"
       >
         Start Bidding
       </button>
