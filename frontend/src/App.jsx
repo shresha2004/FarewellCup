@@ -10,9 +10,13 @@ import TeamList from './components/teamDisplay';
 import AuctionRules from './components/auctionRules';
 import AdminLogin from './components/organiserLogin';
 import BiddingPage from './components/bidding';
+
+import TeamDetails from './components/teamDetails';
+
 import Contact from './components/Contact';
 import Venue from './components/Venue';  // ✅ Import Venue Component
 import DateTimings from './components/DateTimings';  // ✅ Import Date & Timings Component
+
 
 function App() {
   return (
@@ -41,7 +45,7 @@ function AppContent() {
   const scrollToSection = (section) => {
     sectionRefs[section]?.current?.scrollIntoView({ behavior: 'smooth' });
   };
-
+if(isAdmin) localStorage.setItem('isAdmin','true');
   return (
     <div className="min-h-screen flex flex-col">
       {/* Show Navbar only if not on the bidding page */}
@@ -53,7 +57,10 @@ function AppContent() {
           <Route path="/mandaVinayChandra" element={<TeamRegistrationForm />} />
           <Route path="/bidding" element={<BiddingPage />} />
 
-          {/* Render all sections on home page */}
+          <Route path="/teams/:teamId" element={<TeamDetails />} />
+          
+          {/* Render all other sections only when not on bidding page */}
+
           <Route
             path="/"
             element={
