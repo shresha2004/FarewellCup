@@ -16,7 +16,7 @@ const api = axios.create({
 // Add a request interceptor (optional)
 api.interceptors.request.use(
   (config) => {
-    console.log(`Request sent to ${config.url}`);
+   // console.log(`Request sent to ${config.url}`);
     return config;
   },
   (error) => {

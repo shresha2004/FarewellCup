@@ -40,7 +40,6 @@ router.get("/:teamId", async (req, res) => {
     try {
         const { teamId } = req.params;
         const players = await Player.find({ team: teamId });
-        console.log(players);
         if (!players.length) {
             return res.status(404).json({ message: "No players found for this team." });
         }
