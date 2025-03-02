@@ -32,7 +32,6 @@ router.post("/register", async (req, res) => {
         });
 
         await newTeam.save();
-        console.log("Team Registered:", newTeam);
         res.status(201).json({ message: "Team registered successfully", team: newTeam });
 
     } catch (error) {
@@ -57,7 +56,6 @@ router.get("/:teamId", async (req, res) => {
     try {
         const teamId = req.params.teamId;
         const team = await Team.findById(teamId);
-        console.log(team);
 
         if (!team) {
             return res.status(404).json({ error: "Team not found" });
