@@ -27,7 +27,7 @@ const Introduction = forwardRef(({ setRegistrationSuccessful }, ref) => {
         </p>
 
         {/* Player Registration Form */}
-        <PlayerRegistration setRegistrationSuccessful={setRegistrationSuccessful} />
+{/*         <PlayerRegistration setRegistrationSuccessful={setRegistrationSuccessful} /> */}
       </div>
 
       {/* Right Side: Image for Larger Screens */}
