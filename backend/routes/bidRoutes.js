@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
         const playerCount = await Player.countDocuments({ team: teamId });
         
         // If the team already has 11 players, prevent adding more
-        if (playerCount > 11) {
+        if (playerCount > 9) {
             return res.status(400).json({ success: false, message: "Team already has 11 players. Cannot add more." });
         }
 
