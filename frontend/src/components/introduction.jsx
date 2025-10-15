@@ -30,10 +30,10 @@ const Introduction = forwardRef(({ setRegistrationSuccessful }, ref) => {
 {/*         <PlayerRegistration setRegistrationSuccessful={setRegistrationSuccessful} /> */}
       </div>
 
-      {/* Right Side: Image for Larger Screens */}
+     
       <div className="hidden lg:block w-1/3 ml-8">
         <img
-          src="https://res.cloudinary.com/drfp8nwqi/image/upload/v1739863176/blge8zmsfbf7m3zsrfyt.png"
+          src="https://res.cloudinary.com/dtyu88isr/image/upload/v1760360811/vn0tuncpwqiotdxzrb25.png"
           alt="Farewell Cup"
           className="w-full h-auto rounded-lg shadow-lg"
         />

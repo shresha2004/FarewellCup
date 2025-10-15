@@ -9,6 +9,8 @@ const TeamDetails = () => {
     const [loading, setLoading] = useState(true);
     const [teamError, setTeamError] = useState(null);
     const [playerError, setPlayerError] = useState(null);
+    const fallbackImage = "https://res.cloudinary.com/dtyu88isr/image/upload/v1760509271/lwi3ea6qllcwuyokhlwx.png"; // Put your default image in public/images
+
 
     useEffect(() => {
         const fetchTeamDetails = async () => {
@@ -43,14 +45,14 @@ const TeamDetails = () => {
                 <p className="text-red-500 text-center">{teamError}</p>
             ) : (
                 <div className="max-w-4xl mx-auto bg-[#3E3451] p-6 rounded-lg shadow-lg text-white text-center">
-                    <img src={team.teamLogo} alt={team.teamName} className="w-40 h-40 object-contain mx-auto rounded-md" />
+                    <img src={team.teamLogo} alt={team.teamName} className="w-40 h-40 object-contain mx-auto rounded-md"  onError={(e) => e.target.src = fallbackImage} />
                     <h2 className="text-2xl font-bold mt-4">{team.teamName}</h2>
 
                     {/* Captain & Icon Player Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                         {/* Captain Card */}
                         <div className="bg-[#803BB1] rounded-lg p-4 shadow-lg text-white text-center">
-                            <img src={team.captainImage} alt={team.captainName} className="w-24 h-24 object-cover rounded-full mx-auto" />
+                            <img src={team.captainImage} alt={team.captainName} className="w-24 h-24 object-cover rounded-full mx-auto"  onError={(e) => e.target.src = fallbackImage}/>
                             <h3 className="text-xl font-semibold mt-2">Captain</h3>
                             <h4 className="text-lg">{team.captainName}</h4>
                             <p className="text-sm">{team.captainContact}</p>
@@ -60,7 +62,7 @@ const TeamDetails = () => {
 
                         {/* Icon Player Card */}
                         <div className="bg-[#803BB1] rounded-lg p-4 shadow-lg text-white text-center">
-                            <img src={team.iconPlayerImage} alt={team.iconPlayerName} className="w-24 h-24 object-cover rounded-full mx-auto" />
+                            <img src={team.iconPlayerImage} alt={team.iconPlayerName} className="w-24 h-24 object-cover rounded-full mx-auto"  onError={(e) => e.target.src = fallbackImage}/>
                             <h3 className="text-xl font-semibold mt-2">Icon Player</h3>
                             <h4 className="text-lg">{team.iconPlayerName}</h4>
                             <p className="text-sm">{team.iconPlayerContact}</p>
@@ -81,7 +83,7 @@ const TeamDetails = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
                     {players.map((player) => (
                         <div key={player._id} className="bg-[#803BB1] rounded-lg p-4 shadow-lg text-white text-center">
-                            <img src={player.profilePic} alt={player.name} className="w-24 h-24 object-cover rounded-full mx-auto" />
+                            <img src={player.profilePic} alt={player.name} className="w-24 h-24 object-cover rounded-full mx-auto"   onError={(e) => e.target.src = fallbackImage}/>
                             <h4 className="text-lg font-semibold mt-2">{player.name}</h4>
                             <p className="text-sm">{player.role}</p>
                             <p className="text-sm">{player.contact}</p>

@@ -38,6 +38,4 @@ build/
 *.seed
 *.pid.lock
 
-# Temporary files
-tmp/
-temp/
+
