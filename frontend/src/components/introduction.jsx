@@ -20,7 +20,7 @@ const Introduction = forwardRef(({ setRegistrationSuccessful }, ref) => {
       <div className="relative z-10 p-8 rounded-lg w-full max-w-3xl md:text-left ">
         <h1 className="text-4xl font-extrabold mb-4 text-[#802BB1] drop-shadow-lg">Welcome to the Farewell Cup 2025</h1>
         <p className="text-lg text-gray-300 leading-relaxed my-5">
-          The Farewell Cup 2025 is an exciting cricket tournament where hostelites from our college can register
+          The Farewell Cup 2025 is an exciting cricket tournament where hostelites from NMIT college can register
           as individual players and participate in a unique auction process. Captains will bid on registered players in a dynamic,
           real-time auction using a point-based system. Join us for an unforgettable experience as we bid, build teams, and celebrate the
           spirit of cricket!
