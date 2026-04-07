@@ -3,12 +3,12 @@ import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
     return (
-        <footer className="bg-gradient-to-r from-[#2D283E] to-[#802BB1] text-white py-6">
+        <footer className="bg-gradient-to-r from-[#1a0000] to-[#8b0000] text-white py-6">
             <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-6">
-                
+
                 {/* Brand Section */}
                 <div className="text-center md:text-left mb-4 md:mb-0">
-                    <h2 className="text-2xl font-bold">Farewell Cup 2025</h2>
+                    <h2 className="text-2xl font-bold">Farewell Cup 2026</h2>
                     <p className="text-sm opacity-80">Developed by Shresha & Amogh</p>
                 </div>
 

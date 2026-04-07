@@ -25,7 +25,7 @@ const TeamList = forwardRef((props, ref) => {
     }, []);
 
     return (
-        <div ref={ref} className="min-h-screen p-6 bg-gradient-to-br from-[#2a024b] to-[#1a1b40]">
+        <div ref={ref} className="min-h-screen p-6 bg-gradient-to-br from-[#09090b] to-[#1a0000]">
             <h2 className="text-white text-4xl font-bold text-center mb-8 underline">Teams</h2>
 
             {loading ? (
@@ -38,7 +38,7 @@ const TeamList = forwardRef((props, ref) => {
                         <button
                             key={team._id}
 
-                            className="bg-[#802BB1] rounded-lg p-4 shadow-lg text-white hover:scale-105 transition-transform duration-300 cursor-pointer"
+                            className="bg-[#121212] border border-[#d4af37] rounded-lg p-4 shadow-lg text-white hover:scale-105 transition-transform duration-300 cursor-pointer"
                             onClick={() => navigate(`/teams/${team._id}`)} // Redirect to TeamDetails page
                         >
                             <img src={team.teamLogo} alt={team.teamName} className="w-full h-32 object-contain rounded-md" />

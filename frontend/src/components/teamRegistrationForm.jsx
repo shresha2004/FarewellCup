@@ -4,8 +4,8 @@ import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/drfp8nwqi/image/upload";
-const CLOUDINARY_PRESET = "mni2tbq0"; // Replace with your Cloudinary preset
+const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dlrlgzxs1/image/upload";
+const CLOUDINARY_PRESET = "FarewellCup uploads";
 
 const TeamRegistrationForm = () => {
     const [formData, setFormData] = useState({
@@ -134,12 +134,12 @@ const TeamRegistrationForm = () => {
 
     return (isModalOpen && (
         <div className="max-w-xl mx-auto p-8 bg-white shadow-lg rounded-xl">
-           
 
-            <h2 className="text-3xl font-bold text-[#2D283E] mb-6 text-center">
+
+            <h2 className="text-3xl font-bold text-[#18181b] mb-6 text-center">
                 Team Registration
             </h2>
-          
+
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Text Inputs */}
                 {[
@@ -150,13 +150,13 @@ const TeamRegistrationForm = () => {
                     { label: "Icon Player Contact", name: "iconPlayerContact", type: "tel" },
                 ].map(({ label, name, type = "text" }) => (
                     <div key={name}>
-                        <label className="text-[#2D283E] font-medium">{label}:</label>
+                        <label className="text-[#18181b] font-medium">{label}:</label>
                         <input
                             type={type}
                             name={name}
                             value={formData[name]}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded-lg focus:ring-[#802BB1] focus:border-[#802BB1]"
+                            className="w-full p-2 border border-gray-300 rounded-lg focus:ring-[#d4af37] focus:border-[#d4af37]"
                             required
                         />
                         {errors[name] && <p className="text-red-500 text-sm">{errors[name]}</p>}
@@ -171,11 +171,11 @@ const TeamRegistrationForm = () => {
                     { label: "Icon Player's Year of Study", name: "iconPlayerYearOfStudy" },
                 ].map(({ label, name }) => (
                     <div key={name}>
-                        <label className="text-[#2D283E] font-medium">{label}:</label>
+                        <label className="text-[#18181b] font-medium">{label}:</label>
                         <select
                             name={name}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded-lg focus:ring-[#802BB1] focus:border-[#802BB1]"
+                            className="w-full p-2 border border-gray-300 rounded-lg focus:ring-[#d4af37] focus:border-[#d4af37]"
                             required
                         >
                             <option value="">Select {label}</option>
@@ -196,15 +196,26 @@ const TeamRegistrationForm = () => {
                     { label: "Icon Player's Profile Picture", setImage: setIconPlayerImage },
                 ].map(({ label, setImage }) => (
                     <div key={label}>
-                        <label className="text-[#2D283E] font-medium">{label}:</label>
-                        <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, setImage)} required />
+                        <label className="text-[#18181b] font-medium block mb-1">{label}:</label>
+                        <input 
+                            type="file" 
+                            accept="image/*" 
+                            onChange={(e) => handleFileChange(e, setImage)} 
+                            className="w-full text-sm text-[#18181b]
+                                file:mr-3 file:py-1.5 file:px-3
+                                file:rounded-md file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-[#18181b] file:text-white
+                                hover:file:bg-black hover:file:text-white cursor-pointer transition-all"
+                            required 
+                        />
                     </div>
                 ))}
                 {isUploading && <p className="text-black">Uploading image...</p>}
 
                 <button
                     disabled={isSubmitting || isUploading}
-                    className="w-full bg-[#802BB1] text-white py-2 rounded-lg hover:bg-[#2D283E] transition">
+                    className="w-full bg-[#121212] border border-[#d4af37] text-white py-2 rounded-lg hover:bg-[#18181b] transition">
                     {isSubmitting ? (
                         <ClipLoader size={20} color="#ffffff" />
                     ) : (

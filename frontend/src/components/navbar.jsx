@@ -3,9 +3,12 @@ import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBaseballBatBall } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Navbar({ scrollToSection, isAdmin, setIsadmin }) {
   const [scrolling, setScrolling] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,15 +26,29 @@ export default function Navbar({ scrollToSection, isAdmin, setIsadmin }) {
   }, []);
 
   const navigation = [
-    { name: "Introduction", section: "introduction" },
-    { name: "Teams", section: "teams" },
-    { name: "Players Registered", section: "playersRegistered" },
-    { name: "Rules", section: "rules" },
-    { name: "Venue", section: "venue" },
-    { name: "Date And Timings", section: "dateTimings" },
-    { name: "Contact", section: "contact" },
-    { name: "Organiser Login", section: "login" },
+    { name: "Home", type: "page", path: "/" },
+    { name: "Introduction", type: "scroll", section: "introduction" },
+    { name: "Teams", type: "page", path: "/teams" },
+    { name: "Players", type: "page", path: "/players" },
+    { name: "Rules", type: "scroll", section: "rules" },
+    { name: "Venue", type: "scroll", section: "venue" },
+    { name: "Date And Timings", type: "scroll", section: "dateTimings" },
+    { name: "Contact", type: "page", path: "/contact" },
+    { name: "Organiser Login", type: "page", path: "/login" },
   ];
+
+  const handleNavClick = (item) => {
+    if (item.type === "page") {
+      navigate(item.path);
+    } else {
+      if (location.pathname !== "/") {
+        navigate("/");
+        setTimeout(() => scrollToSection(item.section), 300);
+      } else {
+        scrollToSection(item.section);
+      }
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("isAdmin");
@@ -41,14 +58,14 @@ export default function Navbar({ scrollToSection, isAdmin, setIsadmin }) {
   return (
     <Disclosure
       as="nav"
-      className={`fixed top-0 w-full z-50 transition-all duration-300 shadow-lg ${scrolling ? "bg-[#802BB1] shadow-lg" : "bg-[#2a024b]"
+      className={`fixed top-0 w-full z-50 transition-all duration-300 shadow-xl border-b-2 ${scrolling ? "bg-[#121212] border-[#d4af37]" : "bg-[#09090b] border-[#3f3f46]"
         }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           {/* Mobile menu button */}
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-[#2a024b] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+            <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-[#09090b] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
               <span className="sr-only">Open main menu</span>
               <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
             </Disclosure.Button>
@@ -72,7 +89,7 @@ export default function Navbar({ scrollToSection, isAdmin, setIsadmin }) {
             {navigation.map((item) => (
               <button
                 key={item.name}
-                onClick={() => scrollToSection(item.section)}
+                onClick={() => handleNavClick(item)}
                 className="text-gray-300 hover:bg-[#ffffff30] hover:text-white rounded-md px-3 py-2 text-sm font-medium transition-all"
               >
                 {item.name}
@@ -83,7 +100,7 @@ export default function Navbar({ scrollToSection, isAdmin, setIsadmin }) {
             {isAdmin && (
               <button
                 onClick={handleLogout}
-                className="bg-#2a024b text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-red-700 transition"
+                className="bg-#09090b text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-red-700 transition"
               >
                 Logout
               </button>
@@ -98,8 +115,8 @@ export default function Navbar({ scrollToSection, isAdmin, setIsadmin }) {
           {navigation.map((item) => (
             <Disclosure.Button
               key={item.name}
-              onClick={() => scrollToSection(item.section)}
-              className="block text-gray-300 hover:bg-[#802BB1] hover:text-white rounded-md px-3 py-2 text-base font-medium"
+              onClick={() => handleNavClick(item)}
+              className="block text-gray-300 hover:bg-[#121212] border border-[#d4af37] hover:text-white rounded-md px-3 py-2 text-base font-medium"
             >
               {item.name}
             </Disclosure.Button>

@@ -109,7 +109,7 @@ const BiddingPage = () => {
 
     return (
         <div className="p-6 bg-white min-h-screen text-gray-900">
-            <h1 className="text-3xl font-bold text-[#802BB1] mb-6 text-center underline">
+            <h1 className="text-3xl font-bold text-[#d4af37] mb-6 text-center underline">
                 Farewell Cup-2025 Bidding
             </h1>
             <div className="bg-white shadow-lg p-6 rounded-lg border border-gray-300">
@@ -117,7 +117,7 @@ const BiddingPage = () => {
                     {/* Button */}
                     <button
                         onClick={selectRandomPlayer}
-                        className="bg-[#802BB1] text-white px-4 py-2 rounded"
+                        className="bg-[#121212] border border-[#d4af37] text-white px-4 py-2 rounded"
                         disabled={countdown > 0} // Disable button during countdown
                     >
                         Select Random Player
@@ -128,7 +128,7 @@ const BiddingPage = () => {
                         <div
                             className="fixed inset-0 bg-gradient-to-br from-black/70 to-black/10 backdrop-blur-md flex justify-center items-center z-[100] p-4"
                             onClick={() => setSelectedTeam(null)}
-                        >                            <span className="text-[#802BB1] text-9xl font-extrabold animate-pulse text-center">
+                        >                            <span className="text-[#d4af37] text-9xl font-extrabold animate-pulse text-center">
                                 Choosing Random Player in  {countdown}
                             </span>
                         </div>
@@ -142,7 +142,7 @@ const BiddingPage = () => {
                 {selectedPlayer && (
                     <>
                         <div className="bg-gray-100 p-6 rounded mb-4 flex flex-col items-center text-center">
-                            <h2 className="text-xl font-bold mb-4 text-[#802BB1] underline">
+                            <h2 className="text-xl font-bold mb-4 text-[#d4af37] underline">
                                 Player on the Block
                             </h2>
                             <img
@@ -191,7 +191,7 @@ const BiddingPage = () => {
                 <div className="flex items-center space-x-2 mt-5">
                     <label htmlFor="teamName" className="whitespace-nowrap font-bold">Team Name:</label>
                     <select
-                        className="p-2 w-full text-black rounded border border-[#802BB1]"
+                        className="p-2 w-full text-black rounded border border-[#d4af37]"
                         onChange={(e) => setSelectedTeam(e.target.value)}
                         id="teamName"
                     >
@@ -208,14 +208,14 @@ const BiddingPage = () => {
                     <input
                         type="number"
                         placeholder="Enter Final Price"
-                        className="p-2 w-full text-black rounded border border-[#802BB1]"
+                        className="p-2 w-full text-black rounded border border-[#d4af37]"
                         value={bidAmount} // Ensuring bid amount updates in the input field
                         onChange={(e) => setBidAmount(Number(e.target.value))}
                     />
                 </div>
                 <div className="justify-center text-center">
                     <button
-                        className="bg-[#802BB1] text-white px-6 py-2 mt-4 rounded"
+                        className="bg-[#121212] border border-[#d4af37] text-white px-6 py-2 mt-4 rounded"
                         onClick={handleBid}
                     >
                         Submit Bid
@@ -223,7 +223,7 @@ const BiddingPage = () => {
                 </div>
             </div>
 
-            <h2 className="text-2xl font-bold text-[#802BB1] mt-8 underline">
+            <h2 className="text-2xl font-bold text-[#d4af37] mt-8 underline">
                 Unselected Players:
             </h2>
             <div>

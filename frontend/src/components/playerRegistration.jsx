@@ -28,12 +28,12 @@ const PlayerRegistration = (ref) => {
   const uploadToCloudinary = async () => {
     const formData = new FormData();
     formData.append('file', image);
-    formData.append('upload_preset', 'mni2tbq0'); // Ensure this is your correct preset
+    formData.append('upload_preset', 'FarewellCup uploads');
 
     setIsUploading(true);
     try {
       const response = await axios.post(
-        'https://api.cloudinary.com/v1_1/drfp8nwqi/image/upload',
+        'https://api.cloudinary.com/v1_1/dlrlgzxs1/image/upload',
         formData
       );
       setIsUploading(false);
@@ -69,10 +69,11 @@ const PlayerRegistration = (ref) => {
     setIsSubmitting(true);
 
     try {
-     
+
       await api.post('players/register', playerData);
       toast.success('Registration Successful!');
       setIsRegistered(true); // Set registration status to true
+      setIsModalOpen(false); // Close the form modal when success
     } catch (error) {
       console.error('Error registering player:', error);
       toast.error('Registration failed. Please try again.');
@@ -81,36 +82,32 @@ const PlayerRegistration = (ref) => {
     }
   };
 
-  if (isRegistered) {
-    return <RegistrationSuccess />;  // Show the success page after registration
-  }
-
   return (
-    <div className="text-center ">
+    <div className="text-center w-full h-full flex">
       <button
         onClick={openModal}
         rel="noopener noreferrer"
-        className="shiny-button bg-gradient-to-r from-[#6E2398] via-[#802BB1] to-[#9D3DCF] text-white font-bold py-4 px-8 rounded-full text-2xl shadow-lg transition-all relative"      >
-        Register
+        className="shiny-button bg-gradient-to-r from-[#5c0000] via-[#8b0000] to-[#5c0000] text-[#d4af37] font-bold py-3 px-6 rounded-full text-xl shadow-lg transition-all relative w-full h-full"      >
+        Player Register
       </button>
 
       {isModalOpen && (
         <>
-          <div className="fixed inset-0 bg-indigo-500 opacity-25 backdrop-blur-sm z-10"> </div>
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-10"> </div>
 
           <div className="fixed inset-0 flex items-center justify-center overflow-auto z-20">
-            <div className="bg-[#802BB1] rounded-lg shadow-lg w-11/12 md:w-2/3 lg:w-1/2 p-4 relative max-h-screen overflow-y-auto">
+            <div className="bg-[#121212] border border-[#d4af37] rounded-lg shadow-lg w-11/12 md:w-2/3 lg:w-1/2 p-4 relative max-h-screen overflow-y-auto">
               <button
                 onClick={closeModal}
                 className="absolute top-2 right-3 text-2xl font-bold text-gray-600 hover:text-red-600 transition"
               >
                 &times;
               </button>
-              <h2 className="text-2xl font-bold mb-4 text-[#2D283E]">Cricket Player Registration</h2>
+              <h2 className="text-2xl font-bold mb-4 text-[#d4af37]">Cricket Player Registration</h2>
               <form onSubmit={handleSubmit} className="space-y-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex items-center">
-                    <label htmlFor="name" className="font-bold text-sm text-[#2D283E] w-1/3">
+                    <label htmlFor="name" className="font-bold text-sm text-gray-200 w-1/3">
                       Name:
                     </label>
                     <input
@@ -119,12 +116,12 @@ const PlayerRegistration = (ref) => {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       required
-                      className="w-full px-2 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-[#2D283E] bg-[#2D283E] text-white"
+                      className="w-full px-2 py-1 rounded-md focus:outline-none focus:ring-1 focus:ring-[#d4af37] border border-gray-600 bg-[#18181b] text-white"
                     />
                   </div>
 
                   <div className="flex items-center">
-                    <label htmlFor="hostel" className="font-bold text-sm text-[#2D283E] w-1/3">
+                    <label htmlFor="hostel" className="font-bold text-sm text-gray-200 w-1/3">
                       Hostel:
                     </label>
                     <select
@@ -132,20 +129,19 @@ const PlayerRegistration = (ref) => {
                       value={hostel}
                       onChange={(e) => setHostel(e.target.value)}
                       required
-                      className="w-full px-2 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-[#2D283E] bg-[#2D283E] text-white"
+                      className="w-full px-2 py-1 rounded-md focus:outline-none focus:ring-1 focus:ring-[#d4af37] border border-gray-600 bg-[#18181b] text-white"
                     >
                       <option value="">Select Hostel</option>
-                      <option value="Isha Boys Hostel">Isha Boys Hostel</option>
+                      <option value="Outside Hostel">Outside Hostel</option>
                       <option value="Kaveri">Kaveri</option>
                       <option value="Nandini">Nandini</option>
-                      <option value="NIS Hostel">NIS Hostel</option>
                       <option value="Shambhavi">Shambhavi</option>
                       <option value="Souparnika">Souparnika</option>
                     </select>
                   </div>
 
                   <div className="flex items-center">
-                    <label htmlFor="year" className="font-bold text-sm text-[#2D283E] w-1/3">
+                    <label htmlFor="year" className="font-bold text-sm text-gray-200 w-1/3">
                       Year:
                     </label>
                     <select
@@ -153,7 +149,7 @@ const PlayerRegistration = (ref) => {
                       value={year}
                       onChange={(e) => setYear(e.target.value)}
                       required
-                      className="w-full px-2 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white bg-[#2D283E]"
+                      className="w-full px-2 py-1 rounded-md focus:outline-none focus:ring-1 focus:ring-[#d4af37] border border-gray-600 text-white bg-[#18181b]"
                     >
                       <option value="">Select Year</option>
                       <option value="1st Year">1st Year</option>
@@ -164,7 +160,7 @@ const PlayerRegistration = (ref) => {
                   </div>
 
                   <div className="flex items-center">
-                    <label htmlFor="contact" className="font-bold text-sm text-[#2D283E] w-1/3">
+                    <label htmlFor="contact" className="font-bold text-sm text-gray-200 w-1/3">
                       Contact Number:
                     </label>
                     <input
@@ -173,12 +169,12 @@ const PlayerRegistration = (ref) => {
                       value={contact}
                       onChange={(e) => setContact(e.target.value)}
                       required
-                      className="w-full px-2 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-[#2D283E] bg-[#2D283E] text-white"
+                      className="w-full px-2 py-1 rounded-md focus:outline-none focus:ring-1 focus:ring-[#d4af37] border border-gray-600 bg-[#18181b] text-white"
                     />
                   </div>
 
                   <div className="flex items-center">
-                    <label htmlFor="role" className="font-bold text-sm text-[#2D283E] w-1/3 mr-2">
+                    <label htmlFor="role" className="font-bold text-sm text-gray-200 w-1/3 mr-2">
                       Specialization:
                     </label>
                     <select
@@ -186,7 +182,7 @@ const PlayerRegistration = (ref) => {
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
                       required
-                      className="w-full px-2 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-[#2D283E] bg-[#2D283E] text-white"
+                      className="w-full px-2 py-1 rounded-md focus:outline-none focus:ring-1 focus:ring-[#d4af37] border border-gray-600 bg-[#18181b] text-white"
                     >
                       <option value="">Select Role</option>
                       <option value="Right Hand Batsman">Right Hand Batsman</option>
@@ -199,7 +195,7 @@ const PlayerRegistration = (ref) => {
                   </div>
 
                   <div className="flex items-center">
-                    <label htmlFor="profilePic" className="font-bold text-sm text-[#2D283E] w-1/3">
+                    <label htmlFor="profilePic" className="font-bold text-sm text-gray-200 w-1/3">
                       Profile Picture:
                     </label>
                     <input
@@ -207,7 +203,12 @@ const PlayerRegistration = (ref) => {
                       id="profilePic"
                       accept="image/*"
                       onChange={onImageChange}
-                      className="w-full px-2 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-[#2D283E] bg-[#2D283E] text-white"
+                      className="w-full text-sm text-gray-200
+                        file:mr-3 file:py-1.5 file:px-3
+                        file:rounded-md file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-[#18181b] file:text-white
+                        hover:file:bg-black hover:file:text-white cursor-pointer transition-all border border-gray-600 rounded-md py-1 px-1"
                     />
                   </div>
                 </div>
@@ -216,7 +217,7 @@ const PlayerRegistration = (ref) => {
 
                 <button
                   type="submit"
-                  className="bg-[#2D283E] text-zinc-400 px-3 py-1 rounded-md font-bold hover:text-white transition mt-4"
+                  className="bg-[#82071d] text-zinc-400 px-3 py-1 rounded-md font-bold hover:text-white transition mt-4"
                   disabled={isSubmitting || isUploading}
                 >
                   {isSubmitting ? (
@@ -231,7 +232,34 @@ const PlayerRegistration = (ref) => {
         </>
       )}
 
-      <ToastContainer />
+      {isRegistered && (
+        <>
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-10"></div>
+          <div className="fixed inset-0 flex items-center justify-center overflow-auto z-20">
+            <div className="bg-[#121212] border border-[#d4af37] rounded-lg shadow-lg w-10/12 md:w-1/3 p-8 text-center relative">
+              <button
+                onClick={() => setIsRegistered(false)}
+                className="absolute top-2 right-3 text-2xl font-bold text-gray-200 hover:text-white transition"
+              >
+                &times;
+              </button>
+              <h2 className="text-2xl font-bold text-white mb-4">Registration Successful!</h2>
+              <p className="text-white mb-4">You have successfully registered for the cricket event.</p>
+              <p className="text-white mb-4">Join us for live updates.</p>
+              <a
+                href="https://chat.whatsapp.com/I1J6PUx8ffs5i3LjF8pYUs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#25D366] bg-white px-4 py-2 rounded-lg font-bold shadow-md hover:bg-gray-100 transition inline-block mt-2"
+              >
+                Join  the WhatsApp Group
+              </a>
+            </div>
+          </div>
+        </>
+      )}
+
+      <ToastContainer position="top-right" autoClose={3000} style={{ marginTop: '4rem', zIndex: 9999 }} />
     </div>
   );
 };
