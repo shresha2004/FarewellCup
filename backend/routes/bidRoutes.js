@@ -31,8 +31,8 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ success: false, message: "Not enough points in the team balance" });
         }
 
-        // Assign player to the team
-        await Player.findByIdAndUpdate(playerId, { team: teamId });
+        // Assign player to the team and mark as SOLD
+        await Player.findByIdAndUpdate(playerId, { team: teamId, auctionStatus: 'SOLD' });
 
         // Deduct the bidAmount from team's totalAmount
         team.totalAmount -= bidAmount;
@@ -41,6 +41,40 @@ router.post('/', async (req, res) => {
         // Respond with success
         return res.json({ success: true, message: "Bid placed successfully! Player assigned to team." });
 
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
+
+router.post('/unsold', async (req, res) => {
+    try {
+        const { playerId } = req.body;
+
+        if (!playerId) {
+            return res.status(400).json({ success: false, message: "Missing required field: playerId" });
+        }
+
+        const player = await Player.findByIdAndUpdate(playerId, { auctionStatus: 'UNSOLD' }, { new: true });
+        if (!player) {
+            return res.status(404).json({ success: false, message: "Player not found" });
+        }
+
+        return res.json({ success: true, message: "Player marked as unsold." });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
+
+router.post('/retrieve-unsold', async (req, res) => {
+    try {
+        const result = await Player.updateMany(
+            { auctionStatus: 'UNSOLD' },
+            { $set: { auctionStatus: 'AVAILABLE', basePrice: 100 } }
+        );
+
+        return res.json({ success: true, message: `Retrieved ${result.modifiedCount} unsold players.` });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Server error" });

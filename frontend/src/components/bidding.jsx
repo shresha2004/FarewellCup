@@ -58,9 +58,11 @@ const BiddingPage = () => {
                 clearInterval(interval);
 
                 for (let year of years) {
-                    const filteredPlayers = players.filter((p) => p.team === null && p.year === year);
+                    const filteredPlayers = players.filter((p) => p.team === null && (!p.auctionStatus || p.auctionStatus === 'AVAILABLE') && p.year === year);
                     if (filteredPlayers.length) {
-                        setSelectedPlayer(filteredPlayers[Math.floor(Math.random() * filteredPlayers.length)]);
+                        const player = filteredPlayers[Math.floor(Math.random() * filteredPlayers.length)];
+                        setSelectedPlayer(player);
+                        setBidAmount(player.basePrice || 200);
                         return;
                     }
                 }
@@ -78,7 +80,7 @@ const BiddingPage = () => {
 
     const decreaseBid = () => {
         setBidAmount((prev) => {
-            const newBid = prev > 200 ? (prev <= 1000 ? prev - 50 : prev - 100) : prev;
+            const newBid = prev > 100 ? (prev <= 1000 ? prev - 50 : prev - 100) : prev;
             return newBid;
         });
     };
@@ -104,6 +106,35 @@ const BiddingPage = () => {
             }
         } catch (error) {
             alert("Failed to place bid. Please try again.");
+        }
+    };
+
+    const handleMarkUnsold = async () => {
+        if (!selectedPlayer) return;
+        try {
+            const response = await api.post("/bid/unsold", { playerId: selectedPlayer._id });
+            if (response.data.success) {
+                alert("Player marked as unsold!");
+                window.location.reload();
+            } else {
+                alert("Failed to mark as unsold: " + response.data.message);
+            }
+        } catch (error) {
+            alert("Failed to mark player as unsold.");
+        }
+    };
+
+    const handleRetrieveUnsold = async () => {
+        try {
+            const response = await api.post("/bid/retrieve-unsold");
+            if (response.data.success) {
+                alert(response.data.message);
+                window.location.reload();
+            } else {
+                alert("Failed to retrieve unsold players");
+            }
+        } catch (error) {
+            alert("Error retrieving unsold players.");
         }
     };
 
@@ -213,26 +244,42 @@ const BiddingPage = () => {
                         onChange={(e) => setBidAmount(Number(e.target.value))}
                     />
                 </div>
-                <div className="justify-center text-center">
+                <div className="flex justify-center gap-4 text-center mt-4">
                     <button
-                        className="bg-[#121212] border border-[#d4af37] text-white px-6 py-2 mt-4 rounded"
+                        className="bg-[#121212] border border-[#d4af37] text-white px-6 py-2 rounded hover:text-[#d4af37] transition-colors"
                         onClick={handleBid}
                     >
                         Submit Bid
                     </button>
+                    <button
+                        className="bg-red-900 border border-red-500 text-white px-6 py-2 rounded hover:bg-red-700 transition-colors"
+                        onClick={handleMarkUnsold}
+                    >
+                        Mark Unsold
+                    </button>
                 </div>
             </div>
 
-            <h2 className="text-2xl font-bold text-[#d4af37] mt-8 underline">
-                Unselected Players:
-            </h2>
+            <div className="flex justify-between items-center mt-8 cursor-pointer">
+                <h2 className="text-2xl font-bold text-[#d4af37] underline">
+                    Unselected Players:
+                </h2>
+                {players.some(p => p.auctionStatus === 'UNSOLD') && (
+                    <button 
+                        className="bg-[#d4af37] text-black px-4 py-2 rounded font-bold hover:bg-white transition-colors"
+                        onClick={handleRetrieveUnsold}
+                    >
+                        Retrieve Unsold Players
+                    </button>
+                )}
+            </div>
             <div>
                 {years.map((year) => (
                     <div key={year}>
                         <h2 className="text-xl font-bold mt-4">{year}</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
                             {players
-                                .filter((p) => p.team === null && p.year === year)
+                                .filter((p) => p.team === null && (!p.auctionStatus || p.auctionStatus === 'AVAILABLE') && p.year === year)
                                 .map((player) => (
                                     <div
                                         key={player._id}
@@ -254,6 +301,44 @@ const BiddingPage = () => {
                     </div>
                 ))}
             </div>
+
+            {players.some(p => p.auctionStatus === 'UNSOLD') && (
+                <>
+                    <h2 className="text-2xl font-bold text-[#d4af37] mt-8 underline">
+                        Unsold Players:
+                    </h2>
+                    <div>
+                        {years.map((year) => {
+                            const unsoldInYear = players.filter((p) => p.auctionStatus === 'UNSOLD' && p.year === year);
+                            if (unsoldInYear.length === 0) return null;
+                            return (
+                                <div key={year + "-unsold"}>
+                                    <h2 className="text-xl font-bold mt-4 text-red-500">{year}</h2>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
+                                        {unsoldInYear.map((player) => (
+                                            <div
+                                                key={player._id}
+                                                className="bg-white shadow-md p-4 rounded-lg border border-red-500"
+                                            >
+                                                <img
+                                                    src={player.profilePic}
+                                                    alt={player.name}
+                                                    className="w-20 h-20 rounded-full mx-auto"
+                                                />
+                                                <p className="text-lg font-bold text-center mt-2">
+                                                    {player.name}
+                                                </p>
+                                                <p className="text-gray-600 text-center">{player.role}</p>
+                                                <p className="text-gray-500 text-center">{player.year}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </>
+            )}
 
         </div>
     );

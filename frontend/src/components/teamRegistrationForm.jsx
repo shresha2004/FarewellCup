@@ -36,8 +36,7 @@ const TeamRegistrationForm = () => {
     const [errors, setErrors] = useState({});
 
     const hostelOptions = [
-        "Isha Boys Hostel",
-        "NIS Hostel",
+        "Outside Hostel",
         "Souparnika",
         "Nandini",
         "Shambhavi",
@@ -197,17 +196,17 @@ const TeamRegistrationForm = () => {
                 ].map(({ label, setImage }) => (
                     <div key={label}>
                         <label className="text-[#18181b] font-medium block mb-1">{label}:</label>
-                        <input 
-                            type="file" 
-                            accept="image/*" 
-                            onChange={(e) => handleFileChange(e, setImage)} 
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleFileChange(e, setImage)}
                             className="w-full text-sm text-[#18181b]
                                 file:mr-3 file:py-1.5 file:px-3
                                 file:rounded-md file:border-0
                                 file:text-sm file:font-semibold
                                 file:bg-[#18181b] file:text-white
                                 hover:file:bg-black hover:file:text-white cursor-pointer transition-all"
-                            required 
+                            required
                         />
                     </div>
                 ))}

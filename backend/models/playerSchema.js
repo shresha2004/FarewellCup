@@ -28,7 +28,9 @@ const playerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    team: { type: mongoose.Schema.Types.ObjectId, ref: 'Team', default: null }
+    team: { type: mongoose.Schema.Types.ObjectId, ref: 'Team', default: null },
+    auctionStatus: { type: String, enum: ['AVAILABLE', 'UNSOLD', 'SOLD'], default: 'AVAILABLE' },
+    basePrice: { type: Number, default: 200 }
 });
 
 // Create Model
