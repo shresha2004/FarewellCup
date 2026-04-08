@@ -87,7 +87,7 @@ const PlayerRegistration = (ref) => {
       <button
         onClick={openModal}
         rel="noopener noreferrer"
-        className="shiny-button bg-gradient-to-r from-[#5c0000] via-[#8b0000] to-[#5c0000] text-[#d4af37] font-bold py-3 px-6 rounded-full text-xl shadow-lg transition-all relative w-full h-full"      >
+        className="shiny-button hover:scale-105 transform hover:shadow-2xl bg-gradient-to-r from-[#5c0000] via-[#8b0000] to-[#5c0000] text-[#d4af37] font-extrabold py-5 px-8 rounded-full text-2xl md:text-3xl shadow-xl transition-all duration-300 relative w-full h-full"      >
         Player Register
       </button>
 

@@ -27,18 +27,8 @@ const Introduction = forwardRef(({ setRegistrationSuccessful }, ref) => {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-          <div className="w-full flex">
+          <div className="w-full flex sm:col-span-2 min-h-[80px]">
             <PlayerRegistration setRegistrationSuccessful={setRegistrationSuccessful} />
-          </div>
-
-          <div className="w-full flex">
-            <Link to="/team-registration" className="w-full">
-              <button
-                className="shiny-button bg-gradient-to-r from-[#5c0000] via-[#8b0000] to-[#5c0000] text-[#d4af37] font-bold py-3 px-6 rounded-full text-xl shadow-lg transition-all relative w-full h-full"
-              >
-                Team Register
-              </button>
-            </Link>
           </div>
 
           <div className="w-full flex">
