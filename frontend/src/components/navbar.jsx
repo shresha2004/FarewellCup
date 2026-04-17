@@ -79,7 +79,7 @@ export default function Navbar({ scrollToSection, isAdmin, setIsadmin }) {
                 className="text-2xl mr-2 text-white animate-spin"
               />
               <span className="font-bold text-2xl text-white">
-                Farewell Cup 2025
+                Farewell Cup 2026
               </span>
             </div>
           </div>
