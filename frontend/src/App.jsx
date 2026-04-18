@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './components/navbar';
 import Introduction from './components/introduction';
-import PlayerRegistration from './components/playerRegistration';
+//import PlayerRegistration from './components/playerRegistration';
 import RegistrationSuccess from './components/RegistrationSuccess';
 import TeamRegistrationForm from './components/teamRegistrationForm';
 import PlayerList from './components/playerDisplay';

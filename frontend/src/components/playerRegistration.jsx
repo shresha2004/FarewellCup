@@ -85,10 +85,11 @@ const PlayerRegistration = (ref) => {
   return (
     <div className="text-center w-full h-full flex">
       <button
-        onClick={openModal}
+        disabled
         rel="noopener noreferrer"
-        className="shiny-button hover:scale-105 transform hover:shadow-2xl bg-gradient-to-r from-[#5c0000] via-[#8b0000] to-[#5c0000] text-[#d4af37] font-extrabold py-5 px-8 rounded-full text-2xl md:text-3xl shadow-xl transition-all duration-300 relative w-full h-full"      >
-        Player Register
+        className="opacity-50 cursor-not-allowed bg-gradient-to-r from-[#5c0000] via-[#8b0000] to-[#5c0000] text-[#d4af37] font-extrabold py-5 px-8 rounded-full text-2xl md:text-3xl shadow-xl relative w-full h-full"
+      >
+        Registration Closed
       </button>
 
       {isModalOpen && (
