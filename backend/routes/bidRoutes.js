@@ -31,8 +31,8 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ success: false, message: "Not enough points in the team balance" });
         }
 
-        // Assign player to the team and mark as SOLD
-        await Player.findByIdAndUpdate(playerId, { team: teamId, auctionStatus: 'SOLD' });
+        // Assign player to the team, mark as SOLD, and record the sold price
+        await Player.findByIdAndUpdate(playerId, { team: teamId, auctionStatus: 'SOLD', soldPrice: bidAmount });
 
         // Deduct the bidAmount from team's totalAmount
         team.totalAmount -= bidAmount;
@@ -71,7 +71,7 @@ router.post('/retrieve-unsold', async (req, res) => {
     try {
         const result = await Player.updateMany(
             { auctionStatus: 'UNSOLD' },
-            { $set: { auctionStatus: 'AVAILABLE', basePrice: 100 } }
+            { $set: { auctionStatus: 'AVAILABLE', basePrice: 100, soldPrice: null } }
         );
 
         return res.json({ success: true, message: `Retrieved ${result.modifiedCount} unsold players.` });

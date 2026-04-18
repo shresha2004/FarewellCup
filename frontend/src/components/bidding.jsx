@@ -20,6 +20,7 @@ const BiddingPage = () => {
     const [showConfirm, setShowConfirm] = useState(false);
     const [showUnsoldConfirm, setShowUnsoldConfirm] = useState(false);
     const [showUnsoldAnimation, setShowUnsoldAnimation] = useState(false);
+    const [activeTab, setActiveTab] = useState('bidding');
     const years = ["4th Year", "3rd Year", "2nd Year", "1st Year"];
 
     useEffect(() => {
@@ -162,8 +163,34 @@ const BiddingPage = () => {
                 Farewell Cup-2026 Bidding
             </h1>
             
-            <div className="mb-8">
-                <div className="flex flex-col items-center justify-center">
+            {/* Custom Navbar */}
+            <div className="flex justify-center mb-10 border-b border-gray-800 pb-2">
+                <div className="flex space-x-8">
+                    <button 
+                        onClick={() => setActiveTab('bidding')} 
+                        className={`pb-4 text-xl font-bold uppercase tracking-wider transition-all ${activeTab === 'bidding' ? 'text-[#d4af37] border-b-4 border-[#d4af37]' : 'text-gray-500 hover:text-gray-300 border-b-4 border-transparent'}`}
+                    >
+                        Bidding
+                    </button>
+                    <button 
+                        onClick={() => setActiveTab('teams')} 
+                        className={`pb-4 text-xl font-bold uppercase tracking-wider transition-all ${activeTab === 'teams' ? 'text-[#d4af37] border-b-4 border-[#d4af37]' : 'text-gray-500 hover:text-gray-300 border-b-4 border-transparent'}`}
+                    >
+                        Teams List
+                    </button>
+                    <button 
+                        onClick={() => setActiveTab('purse')} 
+                        className={`pb-4 text-xl font-bold uppercase tracking-wider transition-all ${activeTab === 'purse' ? 'text-[#d4af37] border-b-4 border-[#d4af37]' : 'text-gray-500 hover:text-gray-300 border-b-4 border-transparent'}`}
+                    >
+                        Remaining Purse
+                    </button>
+                </div>
+            </div>
+
+            {activeTab === 'bidding' && (
+                <>
+                    <div className="mb-8">
+                        <div className="flex flex-col items-center justify-center">
                     {/* Button */}
                     <button
                         onClick={selectRandomPlayer}
@@ -374,6 +401,82 @@ const BiddingPage = () => {
                                                 <p className="text-red-400 text-xs text-center mt-1">{player.role}</p>
                                             </div>
                                         ))}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
+            </>)}
+
+            {activeTab === 'teams' && (
+                <div className="space-y-8 animate-[fadeIn_0.5s_ease-out]">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {teams.map(team => {
+                            const teamPlayers = players.filter(p => p.team === team._id);
+                            return (
+                                <div key={team._id} className="bg-[#1a1a1a] rounded-xl border border-gray-800 overflow-hidden shadow-xl hover:border-[#d4af37]/50 transition-colors">
+                                    <div className="bg-[#121212] border-b border-gray-800 p-4 text-center">
+                                        <h3 className="text-xl font-black text-[#d4af37] uppercase tracking-wider truncate" title={team.teamName}>{team.teamName}</h3>
+                                        <p className="text-sm font-bold text-gray-500 mt-1">{teamPlayers.length} / 10 Players</p>
+                                    </div>
+                                    <div className="p-4 space-y-2">
+                                        {Array.from({ length: 10 }).map((_, index) => {
+                                            const player = teamPlayers[index];
+                                            return (
+                                                <div key={index} className={`flex justify-between items-center p-2 rounded-lg border ${player ? 'bg-[#242424] border-[#d4af37]/40 ring-1 ring-[#d4af37]/20 shadow-inner' : 'bg-[#121212] border-gray-800 border-dashed'}`}>
+                                                    <div className="flex items-center gap-3 w-full">
+                                                        {player ? (
+                                                            <>
+                                                                <img src={player.profilePic} alt={player.name} className="w-8 h-8 rounded-full border border-[#d4af37] object-cover" />
+                                                                <span className="font-bold text-white text-sm truncate max-w-[100px]" title={player.name}>{player.name}</span>
+                                                                {player.soldPrice && <span className="ml-auto text-green-500 font-extrabold tabular-nums text-sm">🪙 {player.soldPrice}</span>}
+                                                            </>
+                                                        ) : (
+                                                            <span className="text-gray-600 font-medium italic mx-auto text-sm">Player {index + 1}</span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
+
+            {activeTab === 'purse' && (
+                <div className="space-y-8 animate-[fadeIn_0.5s_ease-out]">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                        {teams.map(team => {
+                            const playerCount = players.filter(p => p.team === team._id).length;
+                            return (
+                                <div key={team._id} className="bg-[#1a1a1a] rounded-2xl border border-gray-800 p-6 shadow-2xl relative overflow-hidden group hover:border-[#d4af37] transition-colors">
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4af37] rounded-full blur-[80px] opacity-10 group-hover:opacity-30 transition-opacity"></div>
+                                    <h3 className="text-2xl font-black text-white mb-6 uppercase tracking-wider truncate" title={team.teamName}>{team.teamName}</h3>
+                                    
+                                    <div className="space-y-4">
+                                        <div className="bg-[#242424] p-4 rounded-xl border border-gray-700">
+                                            <p className="text-gray-400 font-bold uppercase tracking-widest text-xs mb-1">Remaining Purse</p>
+                                            <p className="text-4xl font-black text-green-500 my-2 drop-shadow-md tabular-nums">🪙 {team.totalAmount}</p>
+                                        </div>
+                                        
+                                        <div className="bg-[#242424] p-4 rounded-xl border border-gray-700 flex justify-between items-center">
+                                            <div>
+                                                <p className="text-gray-400 font-bold uppercase tracking-widest text-xs">Squad Size</p>
+                                                <p className="text-2xl font-bold text-white mt-1 tabular-nums">{playerCount} <span className="text-gray-500 text-sm">/ 10</span></p>
+                                            </div>
+                                            <div className="w-16 h-16 rounded-full flex items-center justify-center border-[3px] border-gray-700 relative">
+                                                <svg className="absolute inset-0 w-full h-full transform -rotate-90">
+                                                    <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="4" fill="transparent" className="text-transparent" />
+                                                    <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="4" fill="transparent" strokeDasharray={`${(playerCount / 10) * 175} 175`} className="text-[#d4af37] transition-all duration-1000" />
+                                                </svg>
+                                                <span className="text-[#d4af37] font-black text-sm">{Math.round((playerCount / 10) * 100)}%</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             );
