@@ -16,6 +16,10 @@ const BiddingPage = () => {
     const [error, setError] = useState("");
     const [countdown, setCountdown] = useState(0);
     const [fullscreenImage, setFullscreenImage] = useState(null);
+    const [showSoldAnimation, setShowSoldAnimation] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [showUnsoldConfirm, setShowUnsoldConfirm] = useState(false);
+    const [showUnsoldAnimation, setShowUnsoldAnimation] = useState(false);
     const years = ["4th Year", "3rd Year", "2nd Year", "1st Year"];
 
     useEffect(() => {
@@ -86,12 +90,16 @@ const BiddingPage = () => {
         });
     };
 
-    const handleBid = async () => {
+    const handleBid = () => {
         if (!selectedPlayer || !selectedTeam || !bidAmount) {
             alert("Please select a player, a team, and enter a bid amount.");
             return;
         }
+        setShowConfirm(true);
+    };
 
+    const confirmBid = async () => {
+        setShowConfirm(false);
         try {
             const response = await api.post("/bid", {
                 playerId: selectedPlayer._id,
@@ -100,8 +108,10 @@ const BiddingPage = () => {
             });
 
             if (response.data.success) {
-                alert("Player assigned to team successfully!");
-                window.location.reload();
+                setShowSoldAnimation(true);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 4000); // Increased to 4 seconds to enjoy the new animation
             } else {
                 alert("Bid failed: " + response.data.message);
             }
@@ -110,13 +120,20 @@ const BiddingPage = () => {
         }
     };
 
-    const handleMarkUnsold = async () => {
+    const handleMarkUnsold = () => {
         if (!selectedPlayer) return;
+        setShowUnsoldConfirm(true);
+    };
+
+    const confirmMarkUnsold = async () => {
+        setShowUnsoldConfirm(false);
         try {
             const response = await api.post("/bid/unsold", { playerId: selectedPlayer._id });
             if (response.data.success) {
-                alert("Player marked as unsold!");
-                window.location.reload();
+                setShowUnsoldAnimation(true);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 4000);
             } else {
                 alert("Failed to mark as unsold: " + response.data.message);
             }
@@ -383,6 +400,121 @@ const BiddingPage = () => {
                         className="max-w-full max-h-full object-contain rounded-xl shadow-[0_0_50px_rgba(212,175,55,0.2)]"
                         onClick={(e) => e.stopPropagation()}
                     />
+                </div>
+            )}
+
+            {/* Confirm Sale Overlay */}
+            {showConfirm && (
+                <div className="fixed inset-0 bg-black/80 z-[1000] flex justify-center items-center p-4 backdrop-blur-sm">
+                    <div className="bg-[#242424] border-2 border-[#d4af37] rounded-3xl p-10 max-w-md w-full shadow-[0_0_40px_rgba(212,175,55,0.2)] text-center animate-[pulse_0.5s_ease-out]">
+                        <h2 className="text-3xl font-black text-white mb-8 tracking-widest uppercase border-b border-gray-700 pb-4">Confirm Sale</h2>
+                        <div className="mb-10">
+                            <img src={selectedPlayer?.profilePic} alt={selectedPlayer?.name} className="w-40 h-40 rounded-full mx-auto object-cover border-4 border-[#d4af37] shadow-xl mb-6"/>
+                            <p className="text-xl text-gray-300">Sell <span className="font-extrabold text-white text-2xl">{selectedPlayer?.name}</span> to</p>
+                            <p className="text-3xl font-black text-[#d4af37] my-3 uppercase tracking-wider">{teams.find(t => t._id === selectedTeam)?.teamName}</p>
+                            <p className="text-xl text-gray-300">for</p>
+                            <p className="text-5xl font-black text-green-500 mt-3 drop-shadow-lg">🪙 {bidAmount}</p>
+                        </div>
+                        <div className="flex gap-6">
+                            <button className="flex-1 bg-transparent hover:bg-gray-800 text-gray-300 py-4 rounded-xl font-bold border border-gray-600 transition-colors" onClick={() => setShowConfirm(false)}>CANCEL</button>
+                            <button className="flex-1 bg-[#d4af37] hover:bg-yellow-500 text-black py-4 rounded-xl font-black transition-all shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_30px_rgba(212,175,55,0.8)] hover:scale-105" onClick={confirmBid}>CONFIRM</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Confirm Unsold Overlay */}
+            {showUnsoldConfirm && (
+                <div className="fixed inset-0 bg-black/80 z-[1000] flex justify-center items-center p-4 backdrop-blur-sm">
+                    <div className="bg-[#242424] border-2 border-red-600 rounded-3xl p-10 max-w-md w-full shadow-[0_0_40px_rgba(220,38,38,0.2)] text-center animate-[pulse_0.5s_ease-out]">
+                        <h2 className="text-3xl font-black text-red-500 mb-8 tracking-widest uppercase border-b border-gray-700 pb-4">Confirm Unsold</h2>
+                        <div className="mb-10">
+                            <img src={selectedPlayer?.profilePic} alt={selectedPlayer?.name} className="w-40 h-40 rounded-full mx-auto object-cover border-4 border-red-600 shadow-xl mb-6 grayscale"/>
+                            <p className="text-xl text-gray-300">Mark <span className="font-extrabold text-white text-2xl">{selectedPlayer?.name}</span> as</p>
+                            <p className="text-4xl font-black text-red-500 mt-3 uppercase tracking-wider drop-shadow-md">UNSOLD?</p>
+                        </div>
+                        <div className="flex gap-6">
+                            <button className="flex-1 bg-transparent hover:bg-gray-800 text-gray-300 py-4 rounded-xl font-bold border border-gray-600 transition-colors" onClick={() => setShowUnsoldConfirm(false)}>CANCEL</button>
+                            <button className="flex-1 bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-black transition-all shadow-[0_0_20px_rgba(220,38,38,0.4)] hover:shadow-[0_0_30px_rgba(220,38,38,0.8)] hover:scale-105" onClick={confirmMarkUnsold}>CONFIRM</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Unsold Animation Overlay */}
+            {showUnsoldAnimation && (
+                <div className="fixed inset-0 bg-black/90 z-[10000] flex flex-col items-center justify-center backdrop-blur-md">
+                    {/* Ping Effect */}
+                    <div className="animate-[ping_1.5s_cubic-bezier(0,0,0.2,1)_infinite] absolute inset-0 flex justify-center items-center">
+                        <div className="w-[500px] h-[500px] bg-red-600 rounded-full opacity-20"></div>
+                    </div>
+                    
+                    {/* Player Photo */}
+                    <div className="z-10 mb-8 animate-[bounce_2s_infinite]">
+                        <img 
+                            src={selectedPlayer?.profilePic} 
+                            alt={selectedPlayer?.name}
+                            className="w-56 h-56 rounded-full object-cover border-4 border-red-600 shadow-[0_0_50px_rgba(220,38,38,0.6)] grayscale"
+                        />
+                    </div>
+
+                    {/* UNSOLD STAMP */}
+                    <div className="z-10 animate-bounce bg-black/60 border-[8px] border-red-600 text-red-500 px-12 py-4 rounded-3xl transform rotate-6 shadow-[0_0_60px_rgba(220,38,38,1)] mb-8">
+                        <h1 className="text-8xl font-black uppercase tracking-widest drop-shadow-2xl">
+                            UNSOLD!
+                        </h1>
+                    </div>
+
+                    {/* Details */}
+                    <div className="z-10 text-center text-white bg-black/50 px-12 py-8 rounded-3xl border border-gray-700 shadow-2xl">
+                        <p className="text-5xl font-extrabold mb-4 text-white drop-shadow-md">
+                            {selectedPlayer?.name}
+                        </p>
+                        <p className="text-3xl text-gray-300">
+                            Returns to the <span className="text-red-500 font-black uppercase tracking-wider block mt-3 text-4xl">Unsold Pool</span>
+                        </p>
+                    </div>
+                </div>
+            )}
+
+            {/* Sold Animation Overlay */}
+            {showSoldAnimation && (
+                <div className="fixed inset-0 bg-black/90 z-[10000] flex flex-col items-center justify-center backdrop-blur-md">
+                    {/* Ping Effect */}
+                    <div className="animate-[ping_1.5s_cubic-bezier(0,0,0.2,1)_infinite] absolute inset-0 flex justify-center items-center">
+                        <div className="w-[500px] h-[500px] bg-[#d4af37] rounded-full opacity-20"></div>
+                    </div>
+                    
+                    {/* Player Photo */}
+                    <div className="z-10 mb-8 animate-[bounce_2s_infinite]">
+                        <img 
+                            src={selectedPlayer?.profilePic} 
+                            alt={selectedPlayer?.name}
+                            className="w-56 h-56 rounded-full object-cover border-4 border-[#d4af37] shadow-[0_0_50px_rgba(212,175,55,0.6)]"
+                        />
+                    </div>
+
+                    {/* SOLD STAMP */}
+                    <div className="z-10 animate-bounce bg-black/60 border-[8px] border-[#d4af37] text-[#d4af37] px-12 py-4 rounded-3xl transform -rotate-6 shadow-[0_0_60px_rgba(212,175,55,1)] mb-8">
+                        <h1 className="text-8xl font-black uppercase tracking-widest drop-shadow-2xl">
+                            SOLD!
+                        </h1>
+                    </div>
+
+                    {/* Details */}
+                    <div className="z-10 text-center text-white bg-black/50 px-12 py-8 rounded-3xl border border-gray-700 shadow-2xl">
+                        <p className="text-5xl font-extrabold mb-4 text-white drop-shadow-md">
+                            {selectedPlayer?.name}
+                        </p>
+                        <p className="text-3xl text-gray-300">
+                            Sold to <span className="text-[#d4af37] font-black uppercase tracking-wider block mt-3 text-5xl">{teams.find(t => t._id === selectedTeam)?.teamName}</span>
+                        </p>
+                        <div className="mt-8 inline-block bg-green-500/20 px-8 py-3 rounded-full border border-green-500/50 shadow-[0_0_30px_rgba(34,197,94,0.3)]">
+                            <p className="text-5xl text-green-400 font-black">
+                                🪙 {bidAmount}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
